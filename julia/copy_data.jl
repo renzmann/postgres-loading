@@ -5,7 +5,7 @@ using BenchmarkTools
 
 function main()
     sqlite_db = SQLite.DB("fakedata.db")
-    pg_conn = LibPQ.Connection("dbname=pgdb user=robb password=foob host=localhost")
+    pg_conn = LibPQ.Connection("dbname=postgres user=postgres host=localhost")
     rows = DBInterface.execute(sqlite_db, "SELECT * FROM users")
 
     execute(pg_conn, "DROP TABLE IF EXISTS users")
