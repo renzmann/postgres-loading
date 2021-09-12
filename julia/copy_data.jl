@@ -1,12 +1,13 @@
 using SQLite
+using DataFrames
 using LibPQ
 using BenchmarkTools
 
 
 function main()
     sqlite_db = SQLite.DB("fakedata.db")
-    pg_conn = LibPQ.Connection("dbname=postgres user=postgres host=localhost")
-    rows = DBInterface.execute(sqlite_db, "SELECT * FROM users")
+    pg_conn = LibPQ.Connection("dbname=postgres user=postgres password=postgres host=localhost")
+    user_df = DBInterface.execute(sqlite_db, "SELECT * FROM users") |> DataFrame
 
     execute(pg_conn, "DROP TABLE IF EXISTS users")
     execute(
@@ -23,20 +24,14 @@ function main()
 
     execute(pg_conn, "BEGIN;")
 
-    for row in rows
-        user_id, user_name, user_age, user_address = row
-        LibPQ.load!(
-            (user_id = [row.user_id],
-             user_name = [row.user_name],
-             user_age = [row.user_age],
-             user_address = [row.user_address]),
-            pg_conn,
-            """
-            INSERT INTO users (user_id, user_name, user_age, user_address)
-            VALUES            (    \$1,       \$2,      \$3,          \$4)
-            """
-        )
-    end
+    LibPQ.load!(
+        user_df,
+        pg_conn,
+        """
+        INSERT INTO users (user_id, user_name, user_age, user_address)
+        VALUES            (    \$1,       \$2,      \$3,          \$4)
+        """
+    )
 
     execute(pg_conn, "COMMIT;")
 
