@@ -20,17 +20,39 @@ CPU: Intel(R) Core(TM) i7-7820X CPU @ 3.60GHz
 Memory: 64GiB (4 x 16GiB DIMM DDR4 Synchronous 2400 MHz (0.4 ns))
 ```
 
+
 Results
 -------
 
-Python + pandas
+Before running commands it's assumed that postgres is already running locally and
+that we can switch to the postgres user:
+
+```
+sudo su postgres
+```
+
+I have both user and password for the `postgres` user set to `postgres` in the
+scripts. That usually requires this line:
+
+```
+ALTER USER postgres PASSWORD 'postgres';
+```
+
+
+**Python + pandas**
+
+Pandas makes batch processing very easy, so that script will load chunks of rows at a
+time, so it's memory efficient and pretty fast.
 
 ```bash
 python ./python/copy_using_pandas.py
 Finished in 26.1 seconds
 ```
 
-Julia + LibPQ
+**Julia + LibPQ**
+
+I think that the julia version would require manually chunking the data, so this
+version loads all data into memory before writing.
 
 ```bash
 julia
@@ -39,7 +61,9 @@ julia> ]
 (julia) pkg> instantiate
 (julia) pkg> <BS>
 julia> include("julia/copy_data.jl")
-
+BenchmarkTools.Trial: 1 sample with 1 evaluation.
+ Single result which took 54.524 s (3.18% GC) to evaluate,
+ with a memory estimate of 5.42 GiB, over 107996251 allocations.
 ```
 
 Development Environment
