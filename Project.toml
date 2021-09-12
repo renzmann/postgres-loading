@@ -1,0 +1,6 @@
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+LibPQ = "194296ae-ab2e-5f79-8cd4-7183a0a5a0d1"
+OhMyREPL = "5fb14364-9ced-5910-84b2-373655c76a03"
+SQLite = "0aa819cd-b072-5ff4-a722-6bc24af294d9"
