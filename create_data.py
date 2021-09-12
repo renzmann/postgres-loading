@@ -1,3 +1,12 @@
+#! /usr/bin/env python3
+"""
+Build a SQLite database containing a single table, `users`, with one million fake
+records of:
+    * `user_id` - integer primary key
+    * `user_name` TEXT
+    * `user_age` INTEGER
+    * `user_address` TEXT
+"""
 import sqlite3
 import random
 import time
