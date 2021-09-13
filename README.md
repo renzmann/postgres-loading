@@ -44,18 +44,23 @@ ALTER USER postgres PASSWORD 'postgres';
 Pandas makes batch processing very easy, so that script will load chunks of rows at a
 time, so it's memory efficient and pretty fast.
 
-```bash
-python ./python/copy_using_pandas.py
+```
+$ python --version
+Python 3.9.5
+$ python ./python/copy_using_pandas.py
 Finished in 26.1 seconds
 ```
 
 **Julia + LibPQ**
 
 I think that the julia version would require manually chunking the data, so this
-version loads all data into memory before writing.
+version loads all data into memory before writing. This uses a dataframe buffer much
+like the pandas version, but is not as time efficient as I had hoped.
 
-```bash
-julia
+```
+$ julia --version
+julia version 1.6.2
+$ julia
 julia> ]
 (@v1.6) pkg> activate julia/
 (julia) pkg> instantiate
@@ -66,10 +71,32 @@ BenchmarkTools.Trial: 1 sample with 1 evaluation.
  with a memory estimate of 5.42 GiB, over 107996251 allocations.
 ```
 
+**Go**
+
+My very naive (and probably very bad) go version is limited to only 10,000 rows, but
+still took 28.4 seconds. A version limited to 1,000 rows ran in about 2.9 seconds,
+and a 5,000 row version in around 14 seconds so assuming a linear relationship here 
+we can expect 1 MM rows to take about **46 minutes**.
+
+```
+$ cd golang
+$ go run .
+```
+
+Other Languages I'd Like to Try
+--------------------------------
+
+I have little experience in the following, but would like to see how they compare.
+
+1. rust
+2. C/C++
+3. haskell
+
+
 Development Environment
 ---------------
 
-Steps to follow if to recreate the tests.
+Required installation steps to recreate the tests.
 
 Install the python virtual environment:
 
@@ -84,3 +111,8 @@ Create the fake sqlite data:
 ./create_data.py
 ```
 
+The julia steps shown above will perform all the environment management you need for it, you just
+need [julia 1.6.2](https://julialang.org/downloads)
+
+
+For `go`, just follow [the installation instructions](https://golang.org/doc/install).
