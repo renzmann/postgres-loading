@@ -40,7 +40,7 @@ func main() {
 
     insert_str := `
         INSERT INTO users (user_id, user_name, user_age, user_address)
-        VALUES            (      $1,       $2,       $3,           $4)
+        VALUES            (     $1,        $2,       $3,           $4)
     `
     stmt, err := postgres.Prepare(insert_str)
     CheckError(err)
