@@ -3,9 +3,10 @@ SQLite to PostgreSQL Data Movement
 
 Here are some attempts at timing a transfer of 1MM rows of fake data from a sqlite
 database to a postgres database running on `localhost`. It is important to note that
-I am a far less proficient of a programmer in frameworks other than python/pandas. I
-encourage anyone who knows how to properly write one of these tests to contribute
-such a script, given it is sufficiently small.
+the runtimes are inversely proportional to my level of proficiency in that
+language/framework. I encourage anyone who knows how to properly write one of these
+tests to contribute such a script, given it is sufficiently small (~150 LOC max).
+
 
 Compute
 -------
