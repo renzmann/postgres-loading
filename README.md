@@ -39,6 +39,24 @@ scripts. That usually requires this line:
 ALTER USER postgres PASSWORD 'postgres';
 ```
 
+** COPY FROM **
+
+Using pandas, I created a `csv` version of the database for copying, which took a few
+seconds, but once that's done the postgres copy is very quick. The following takes
+~3-4 seconds:
+
+```
+CREATE TABLE IF NOT EXISTS users (user_id INT PRIMARY KEY, user_name TEXT, user_age INT, user_address TEXT);
+COPY user_table FROM '/path/to/fakedata.csv' DELIMITER ',' CSV HEADER;
+```
+
+The pandas to create the csv:
+```python3
+import pandas as pd
+df = pd.read_sql("users", "sqlite:///fakedata.db", index_col="user_id")
+df.to_csv("fakedata.csv")
+```
+
 
 **Python + pandas**
 
