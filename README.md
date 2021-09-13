@@ -1,5 +1,5 @@
-SQLite to PostgreSQL Data Movement
-==================================
+SQLite to PostgreSQL
+====================
 
 Here are some attempts at timing a transfer of 1MM rows of fake data from a sqlite
 database to a postgres database running on `localhost`. It is important to note that
