@@ -92,6 +92,7 @@ I have little experience in the following, but would like to see how they compar
 1. rust
 2. C/C++
 3. haskell
+4. java
 
 
 Development Environment
