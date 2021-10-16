@@ -2,10 +2,9 @@ SQLite to PostgreSQL
 ====================
 
 Here are some attempts at timing a transfer of 1MM rows of fake data from a sqlite
-database to a postgres database running on `localhost`. It is important to note that
-the runtimes are inversely proportional to my level of proficiency in that
-language/framework. I encourage anyone who knows how to properly write one of these
-tests to contribute such a script, given it is sufficiently small (~150 LOC max).
+database to a postgres database running on `localhost`. I encourage anyone who knows
+how to properly write one of these tests to contribute such a script, given it is
+sufficiently small (~150 LOC max).
 
 
 Compute
@@ -39,7 +38,7 @@ scripts. That usually requires this line:
 ALTER USER postgres PASSWORD 'postgres';
 ```
 
-** COPY FROM **
+**COPY FROM**
 
 Using pandas, I created a `csv` version of the database for copying, which took a few
 seconds, but once that's done the postgres copy is very quick. The following takes
