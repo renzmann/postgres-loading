@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     start = time.time()
     with pg_engine.connect() as pg_conn:  # type: ignore
-        pg_conn.execute("DROP TABLE IF EXISTS  users")
+        pg_conn.execute("DROP TABLE IF EXISTS users")
         for df in chunks:
             df.to_sql("users", pg_conn, if_exists="append")
     end = time.time()

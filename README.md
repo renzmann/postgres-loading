@@ -46,7 +46,12 @@ seconds, but once that's done the postgres copy is very quick. The following tak
 ~3-4 seconds:
 
 ```
-CREATE TABLE IF NOT EXISTS users (user_id INT PRIMARY KEY, user_name TEXT, user_age INT, user_address TEXT);
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT PRIMARY KEY,
+    user_name TEXT,
+    user_age INT,
+    user_address TEXT
+);
 COPY user_table FROM '/path/to/fakedata.csv' DELIMITER ',' CSV HEADER;
 ```
 
@@ -92,15 +97,18 @@ BenchmarkTools.Trial: 1 sample with 1 evaluation.
 
 **Go**
 
-My very naive (and probably very bad) go version is limited to only 10,000 rows, but
-still took 28.4 seconds. A version limited to 1,000 rows ran in about 2.9 seconds,
-and a 5,000 row version in around 14 seconds so assuming a linear relationship here 
-we can expect 1 MM rows to take about **46 minutes**.
+Taking advantage of PostgreSQL support of concurrent writes, we can partition the
+original table into chunks (using LIMIT and OFFSET), and have each goroutine handle
+copying just that chunk.
+
+Doing it this way lends to a considerable speedup:
 
 ```
 $ cd golang
 $ go run .
+Finished in 6.55 seconds
 ```
+
 
 Other Languages I'd Like to Try
 --------------------------------
